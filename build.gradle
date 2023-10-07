@@ -23,7 +23,13 @@ dependencies {
     implementation 'org.modelmapper:modelmapper:2.4.3'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 }
+
+test{
+    useJUnitPlatform()
+}
+
 
 tasks.named('test') {
     useJUnitPlatform()
