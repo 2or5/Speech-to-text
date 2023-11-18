@@ -1,14 +1,12 @@
 package com.speechtotext.controllers;
 
+import com.speechtotext.DTO.NotesDto;
 import com.speechtotext.models.Notes;
 import com.speechtotext.service.NoteService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,11 @@ public class NotesController {
     @GetMapping("/note/{Id}")
     public ResponseEntity<Notes> getNoteById(@PathVariable String Id){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(Id));
+    }
+
+    @PostMapping("/create-note")
+    public ResponseEntity<Notes> createNote(@RequestBody NotesDto notesDto){
+        noteService.saveNotes(notesDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
