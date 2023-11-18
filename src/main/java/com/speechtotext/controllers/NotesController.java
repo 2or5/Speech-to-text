@@ -32,4 +32,9 @@ public class NotesController {
         noteService.saveNotes(notesDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @DeleteMapping("/delete-note/{id}")
+    public ResponseEntity<String> deleteNote(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.deleteNote(id));
+    }
 }

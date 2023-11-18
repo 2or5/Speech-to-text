@@ -36,4 +36,10 @@ public class NoteServiceImp implements NoteService {
         newNotes.setDate(Timestamp.valueOf(LocalDateTime.now()));
         noteRepo.save(newNotes);
     }
+
+    @Override
+    public String deleteNote(String id) {
+        noteRepo.deleteById(id);
+        return "Note was deleted:" + id;
+    }
 }

@@ -11,4 +11,6 @@ public interface NoteService {
     Notes getNoteById(String id);
 
     void saveNotes(NotesDto notesDto);
+
+    String deleteNote(String id);
 }
