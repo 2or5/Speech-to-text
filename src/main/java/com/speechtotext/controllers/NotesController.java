@@ -33,6 +33,11 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping("/notesss")
+    public ResponseEntity<List<Notes>> getAllNotesByUserId(){
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserId());
+    }
+
     @DeleteMapping("/delete-note/{id}")
     public ResponseEntity<String> deleteNote(@PathVariable String id){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.deleteNote(id));

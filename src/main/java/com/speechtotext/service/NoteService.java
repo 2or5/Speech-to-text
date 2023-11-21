@@ -11,6 +11,7 @@ public interface NoteService {
     Notes getNoteById(String id);
 
     void saveNotes(NotesDto notesDto);
+    List<Notes> getAllNotesByUserId();
 
     String deleteNote(String id);
 }
