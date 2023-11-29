@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/notes")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class NotesController {
 
     private final NoteService noteService;
@@ -22,7 +23,7 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.OK).body(notes);
     }
 
-    @GetMapping("/note/{Id}")
+        @GetMapping("/note/{Id}")
     public ResponseEntity<Notes> getNoteById(@PathVariable String Id){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(Id));
     }
