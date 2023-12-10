@@ -7,4 +7,5 @@ public class NotesDto {
     String name;
     String text;
     String userId;
+    String base64;
 }

@@ -12,6 +12,7 @@ public interface NoteService {
 
     void saveNotes(NotesDto notesDto);
     List<Notes> getAllNotesByUserId();
+    void convertAudioToText();
 
     String deleteNote(String id);
 }

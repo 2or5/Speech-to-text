@@ -39,6 +39,12 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserId());
     }
 
+    @GetMapping("/testConvert")
+    public ResponseEntity<Notes> test(){
+        noteService.convertAudioToText();
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @DeleteMapping("/delete-note/{id}")
     public ResponseEntity<String> deleteNote(@PathVariable String id){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.deleteNote(id));

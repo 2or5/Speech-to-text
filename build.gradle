@@ -15,11 +15,20 @@ java {
 repositories {
     mavenCentral()
 }
+//
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.0"
+//        mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:3.1.0"
+//    }
+//}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'com.google.cloud:google-cloud-speech:4.25.0'
 //    implementation group: 'com.google.cloud', name: 'spring-cloud-gcp-starter', version: '4.8.4'
+//    implementation group: 'com.google.cloud', name: 'spring-cloud-gcp-starter-storage', version: '4.8.4'
+//    implementation platform('com.google.cloud:libraries-bom:26.28.0')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.hibernate.validator:hibernate-validator'
     implementation 'org.modelmapper:modelmapper:2.4.3'
