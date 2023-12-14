@@ -1,5 +1,6 @@
 package com.speechtotext.controllers;
 
+import com.speechtotext.DTO.Base64Dto;
 import com.speechtotext.DTO.NotesDto;
 import com.speechtotext.models.Notes;
 import com.speechtotext.service.NoteService;
@@ -40,8 +41,8 @@ public class NotesController {
     }
 
     @GetMapping("/testConvert")
-    public ResponseEntity<Notes> test(){
-        noteService.convertAudioToText();
+    public ResponseEntity<Notes> test(@RequestBody Base64Dto base64){
+        noteService.convertAudioToText(base64.getBase64());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

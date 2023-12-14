@@ -7,12 +7,9 @@ import java.util.List;
 
 public interface NoteService {
     List<Notes> getAllNotes();
-
     Notes getNoteById(String id);
-
     void saveNotes(NotesDto notesDto);
     List<Notes> getAllNotesByUserId();
-    void convertAudioToText();
-
+    void convertAudioToText(String base64);
     String deleteNote(String id);
 }
