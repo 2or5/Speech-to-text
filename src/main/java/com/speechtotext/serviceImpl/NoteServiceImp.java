@@ -32,7 +32,6 @@ import java.util.Optional;
 public class NoteServiceImp implements NoteService {
 
     private final NoteRepo noteRepo;
-    private final ModelMapper modelMapper;
     private final UserRepo userRepo;
     private final Storage storage;
     @Override
@@ -50,14 +49,21 @@ public class NoteServiceImp implements NoteService {
     public void saveNotes(NotesDto notesDto) {
         User user = userRepo.findById(notesDto.getUserId())
                 .orElseThrow(()-> new WrongIdException(ErrorMessages.USER_NOT_FOUND_BY_ID));
-        Notes newNotes = modelMapper.map(notesDto, Notes.class);
-        newNotes.setDate(Timestamp.valueOf(LocalDateTime.now()));
-        noteRepo.save(newNotes);
-        user.setNotes(List.of(newNotes));
+        Notes notes = Notes.builder()
+                .name(notesDto.getName())
+                .date(Timestamp.valueOf(LocalDateTime.now()))
+                .text(convertAudioToText(notesDto.getBase64()))
+                .build();
+        noteRepo.save(notes);
+        user.getNotes().add(notes);
         userRepo.save(user);
     }
 
-    public void saveAudioOnGoogleCloudBucket(String base64){
+    /**
+     This method is needed to save base64 on Google bucket and after that
+     use method convertAudioToText.
+     **/
+    private void saveAudioOnGoogleCloudBucket(String base64){
         BlobId blobId = BlobId.of("wgebrehnbrethnj4retn", "record.mp3");
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         System.out.println(base64);
@@ -71,12 +77,13 @@ public class NoteServiceImp implements NoteService {
         storage.create(blobInfo, decodedByte);
     }
 
-    @Override
-    public void convertAudioToText(String base64) {
+    /**
+     This method is needed to translate sound into text
+     **/
+    private String convertAudioToText(String base64) {
         saveAudioOnGoogleCloudBucket(base64);
-        BlobId blobId = BlobId.of("wgebrehnbrethnj4retn", "test.mp3");
         try (SpeechClient speechClient = SpeechClient.create()) {
-            String gcsUri = "gs://wgebrehnbrethnj4retn/test.mp3";
+            String gcsUri = "gs://wgebrehnbrethnj4retn/record.mp3";
             RecognitionConfig config =
                     RecognitionConfig.newBuilder()
                             .setEncoding(RecognitionConfig.AudioEncoding.MP3)
@@ -90,14 +97,16 @@ public class NoteServiceImp implements NoteService {
             for (SpeechRecognitionResult result : results) {
                 SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
                 System.out.printf("Transcription: %s%n", alternative.getTranscript());
+                return alternative.getTranscript();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return ErrorMessages.CANT_TRANSLATE_AUDIO;
     }
 
     public List<Notes> getAllNotesByUserId() {
-        Optional<User> userOptional = userRepo.findById("651c61e6de1460284ddef65b");
+        Optional<User> userOptional = userRepo.findById("65549678dcc07762fc7b5200");
         // Обробка випадку, коли користувача не знайдено
         if (userOptional.isPresent()) {
             User user = userOptional.get();

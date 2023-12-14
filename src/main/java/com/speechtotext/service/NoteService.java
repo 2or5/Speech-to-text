@@ -10,6 +10,5 @@ public interface NoteService {
     Notes getNoteById(String id);
     void saveNotes(NotesDto notesDto);
     List<Notes> getAllNotesByUserId();
-    void convertAudioToText(String base64);
     String deleteNote(String id);
 }

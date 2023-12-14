@@ -40,12 +40,6 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserId());
     }
 
-    @GetMapping("/testConvert")
-    public ResponseEntity<Notes> test(@RequestBody Base64Dto base64){
-        noteService.convertAudioToText(base64.getBase64());
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
     @DeleteMapping("/delete-note/{id}")
     public ResponseEntity<String> deleteNote(@PathVariable String id){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.deleteNote(id));
