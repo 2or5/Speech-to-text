@@ -32,8 +32,10 @@ import java.util.Optional;
 public class NoteServiceImp implements NoteService {
 
     private final NoteRepo noteRepo;
+    private final ModelMapper modelMapper;
     private final UserRepo userRepo;
     private final Storage storage;
+
     @Override
     public List<Notes> getAllNotes() {
         return noteRepo.findAll();
@@ -103,6 +105,14 @@ public class NoteServiceImp implements NoteService {
             throw new RuntimeException(e);
         }
         return ErrorMessages.CANT_TRANSLATE_AUDIO;
+    }
+
+    @Override
+    public void editNotes(NotesDto notesDto) {
+        Notes note = noteRepo.findById(notesDto.getNoteId())
+                .orElseThrow(()-> new WrongIdException(ErrorMessages.NOTE_NOT_FOUND_BY_ID));
+        modelMapper.map(notesDto, note);
+        noteRepo.save(note);
     }
 
     public List<Notes> getAllNotesByUserId() {

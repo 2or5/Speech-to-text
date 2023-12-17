@@ -12,7 +12,7 @@ import java.util.Date;
 @Document(collection = "notes")
 public class Notes {
     @Id
-    private String id;
+    private String noteId;
     private String name;
     private String text;
     private Date date;
