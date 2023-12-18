@@ -109,7 +109,7 @@ public class NoteServiceImp implements NoteService {
 
     @Override
     public void editNotes(NotesDto notesDto) {
-        Notes note = noteRepo.findById(notesDto.getNoteId())
+        Notes note = noteRepo.findById(notesDto.getId())
                 .orElseThrow(()-> new WrongIdException(ErrorMessages.NOTE_NOT_FOUND_BY_ID));
         modelMapper.map(notesDto, note);
         noteRepo.save(note);
