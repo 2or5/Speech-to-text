@@ -35,15 +35,15 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PutMapping("/edit-note")
+    public ResponseEntity<Notes> editNote(@RequestBody NotesDto notesDto){
+        noteService.editNotes(notesDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @GetMapping("/notesss")
     public ResponseEntity<List<Notes>> getAllNotesByUserId(){
         return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserId());
-    }
-
-    @GetMapping("/testConvert")
-    public ResponseEntity<Notes> test(@RequestBody Base64Dto base64){
-        noteService.convertAudioToText(base64.getBase64());
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/delete-note/{id}")

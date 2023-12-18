@@ -9,7 +9,7 @@ public interface NoteService {
     List<Notes> getAllNotes();
     Notes getNoteById(String id);
     void saveNotes(NotesDto notesDto);
+    void editNotes(NotesDto notesDto);
     List<Notes> getAllNotesByUserId();
-    void convertAudioToText(String base64);
     String deleteNote(String id);
 }
