@@ -1,6 +1,5 @@
 package com.speechtotext.DTO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Base64Dto {
-    private String base64;
+public class NoteDtoResponse {
+    private String name;
+    private String text;
 }

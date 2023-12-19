@@ -1,6 +1,6 @@
 package com.speechtotext.controllers;
 
-import com.speechtotext.DTO.Base64Dto;
+import com.speechtotext.DTO.NoteDtoResponse;
 import com.speechtotext.DTO.NotesDto;
 import com.speechtotext.models.Notes;
 import com.speechtotext.service.NoteService;
@@ -24,9 +24,9 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.OK).body(notes);
     }
 
-        @GetMapping("/note/{Id}")
-    public ResponseEntity<Notes> getNoteById(@PathVariable String Id){
-        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(Id));
+    @GetMapping("/note/{id}")
+    public ResponseEntity<NoteDtoResponse> getNoteById(@PathVariable String id){
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getNoteById(id));
     }
 
     @PostMapping("/create-note")

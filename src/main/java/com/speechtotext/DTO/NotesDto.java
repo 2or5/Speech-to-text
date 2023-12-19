@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class NotesDto {
-    String id;
-    String name;
-    String text;
-    String userId;
-    String base64;
+    private String id;
+    private String name;
+    private String text;
+    private String userId;
+    private String base64;
 }
