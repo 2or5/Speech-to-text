@@ -5,6 +5,7 @@ import com.speechtotext.DTO.NotesDto;
 import com.speechtotext.models.Notes;
 import com.speechtotext.service.NoteService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class NotesController {
 
     private final NoteService noteService;
     @GetMapping
-    public ResponseEntity<List<Notes>> getAllNotes() {
-        List<Notes> notes = noteService.getAllNotes();
+    public ResponseEntity<List<Notes>> getAllNotes(Pageable pageable) {
+        List<Notes> notes = noteService.getAllNotes(pageable);
         return ResponseEntity.status(HttpStatus.OK).body(notes);
     }
 

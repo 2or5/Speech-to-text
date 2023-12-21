@@ -8,6 +8,8 @@ import com.speechtotext.repositories.UserRepo;
 import com.speechtotext.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +22,12 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
 
     @Override
-    @Transactional
-    public List<User> getAllUsers() {
-        return userRepo.findAll();
+    public List<User> getAllUsers(Pageable pageable) {
+        Page<User> page = userRepo.findAll(pageable);
+        return page.getContent();
     }
 
     @Override
-    @Transactional
     public User createUser(UserDto userDto) {
         User newUser = modelMapper.map(userDto, User.class);
         return userRepo.insert(newUser);

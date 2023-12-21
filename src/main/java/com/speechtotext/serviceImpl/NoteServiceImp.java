@@ -15,6 +15,8 @@ import com.speechtotext.repositories.UserRepo;
 import com.speechtotext.service.NoteService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,8 +37,9 @@ public class NoteServiceImp implements NoteService {
     private final Storage storage;
 
     @Override
-    public List<Notes> getAllNotes() {
-        return noteRepo.findAll();
+    public List<Notes> getAllNotes(Pageable pageable) {
+        Page<Notes> page = noteRepo.findAll(pageable);
+        return page.getContent();
     }
 
     @Override
