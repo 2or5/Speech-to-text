@@ -4,8 +4,8 @@ import com.google.cloud.speech.v1.*;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.speechtotext.DTO.NoteDtoResponse;
 import com.speechtotext.DTO.NotesDto;
-import com.speechtotext.SpeechToTextApplication;
 import com.speechtotext.errorMessages.ErrorMessages;
 import com.speechtotext.exeptions.WrongIdException;
 import com.speechtotext.models.Notes;
@@ -15,11 +15,11 @@ import com.speechtotext.repositories.UserRepo;
 import com.speechtotext.service.NoteService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.SpringApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -37,14 +37,16 @@ public class NoteServiceImp implements NoteService {
     private final Storage storage;
 
     @Override
-    public List<Notes> getAllNotes() {
-        return noteRepo.findAll();
+    public List<Notes> getAllNotes(Pageable pageable) {
+        Page<Notes> page = noteRepo.findAll(pageable);
+        return page.getContent();
     }
 
     @Override
-    public Notes getNoteById(String id) {
-        return noteRepo.findById(id)
+    public NoteDtoResponse getNoteById(String id) {
+        Notes note = noteRepo.findById(id)
                 .orElseThrow(()-> new WrongIdException(ErrorMessages.NOTE_NOT_FOUND_BY_ID));
+        return modelMapper.map(note, NoteDtoResponse.class);
     }
 
     @Override
