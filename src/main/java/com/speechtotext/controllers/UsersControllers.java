@@ -1,6 +1,5 @@
 package com.speechtotext.controllers;
 
-import com.speechtotext.models.Notes;
 import com.speechtotext.service.UserService;
 import com.speechtotext.DTO.UserDto;
 import com.speechtotext.models.User;
