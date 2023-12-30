@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/notes")
 @AllArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
 public class NotesController {
 
     private final NoteService noteService;
