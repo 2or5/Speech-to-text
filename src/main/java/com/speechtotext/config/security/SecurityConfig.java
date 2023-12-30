@@ -27,8 +27,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/notes/**").hasAnyAuthority(USER.name(), ADMIN.name())
+                        req.requestMatchers("/notes/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )
