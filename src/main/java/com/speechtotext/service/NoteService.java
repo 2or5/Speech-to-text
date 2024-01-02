@@ -13,6 +13,6 @@ public interface NoteService {
     NoteDtoResponse getNoteById(String id);
     void saveNotes(NotesDto notesDto);
     void editNotes(NotesDto notesDto);
-    List<Notes> getAllNotesByUserEmail(NotesDto notesDto);
+    List<Notes> getAllNotesByUserEmail(String email);
     String deleteNote(String id);
 }

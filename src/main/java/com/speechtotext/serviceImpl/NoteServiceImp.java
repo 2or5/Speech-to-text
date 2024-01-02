@@ -118,8 +118,8 @@ public class NoteServiceImp implements NoteService {
         noteRepo.save(note);
     }
 
-    public List<Notes> getAllNotesByUserEmail(NotesDto notesDto) {
-        User user = userRepo.findUserByEmail(notesDto.getEmail())
+    public List<Notes> getAllNotesByUserEmail(String email) {
+        User user = userRepo.findUserByEmail(email)
                 .orElseThrow(()-> new WrongIdException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL));
         return user.getNotes();
     }
