@@ -1,5 +1,6 @@
 package com.speechtotext.config.security;
 
+import com.speechtotext.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,6 +19,7 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private static final String CLAIM_KEY_ROLE = "role";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -29,8 +31,14 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> extraClaims = new HashMap<>();
+        if (userDetails instanceof User) {
+            User user = (User) userDetails;
+            extraClaims.put(CLAIM_KEY_ROLE, user.getRole().name());
+        }
+        return generateToken(extraClaims, userDetails);
     }
+
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts
