@@ -18,14 +18,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -51,14 +49,17 @@ public class NoteServiceImp implements NoteService {
 
     @Override
     public void saveNotes(NotesDto notesDto) {
-        User user = userRepo.findById(notesDto.getUserId())
-                .orElseThrow(()-> new WrongIdException(ErrorMessages.USER_NOT_FOUND_BY_ID));
+        User user = userRepo.findUserByEmail(notesDto.getEmail())
+                .orElseThrow(()-> new WrongIdException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL));
         Notes notes = Notes.builder()
                 .name(notesDto.getName())
                 .date(Timestamp.valueOf(LocalDateTime.now()))
                 .text(convertAudioToText(notesDto.getBase64()))
                 .build();
         noteRepo.save(notes);
+        if (user.getNotes() == null) {
+            user.setNotes(new ArrayList<>());
+        }
         user.getNotes().add(notes);
         userRepo.save(user);
     }
@@ -117,13 +118,10 @@ public class NoteServiceImp implements NoteService {
         noteRepo.save(note);
     }
 
-    public List<Notes> getAllNotesByUserId() {
-        Optional<User> userOptional = userRepo.findById("65549678dcc07762fc7b5200");
-        // Обробка випадку, коли користувача не знайдено
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user.getNotes();
-        } else return Collections.emptyList();
+    public List<Notes> getAllNotesByUserEmail(NotesDto notesDto) {
+        User user = userRepo.findUserByEmail(notesDto.getEmail())
+                .orElseThrow(()-> new WrongIdException(ErrorMessages.USER_NOT_FOUND_BY_EMAIL));
+        return user.getNotes();
     }
 
     @Override

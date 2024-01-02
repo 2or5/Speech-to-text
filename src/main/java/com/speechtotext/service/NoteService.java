@@ -4,6 +4,7 @@ import com.speechtotext.DTO.NoteDtoResponse;
 import com.speechtotext.DTO.NotesDto;
 import com.speechtotext.models.Notes;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ public interface NoteService {
     NoteDtoResponse getNoteById(String id);
     void saveNotes(NotesDto notesDto);
     void editNotes(NotesDto notesDto);
-    List<Notes> getAllNotesByUserId();
+    List<Notes> getAllNotesByUserEmail(NotesDto notesDto);
     String deleteNote(String id);
 }
