@@ -1,6 +1,5 @@
 package com.speechtotext.serviceImpl;
 
-import com.speechtotext.DTO.UserDto;
 import com.speechtotext.errorMessages.ErrorMessages;
 import com.speechtotext.exeptions.WrongIdException;
 import com.speechtotext.models.User;
@@ -11,7 +10,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -25,12 +23,6 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers(Pageable pageable) {
         Page<User> page = userRepo.findAll(pageable);
         return page.getContent();
-    }
-
-    @Override
-    public User createUser(UserDto userDto) {
-        User newUser = modelMapper.map(userDto, User.class);
-        return userRepo.insert(newUser);
     }
 
     @Override
