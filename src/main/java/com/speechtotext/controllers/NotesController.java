@@ -41,9 +41,9 @@ public class NotesController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/notesss")
-    public ResponseEntity<List<Notes>> getAllNotesByUserId(){
-        return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserId());
+    @GetMapping("/notes-for-user")
+    public ResponseEntity<List<Notes>> getAllNotesByUserEmail(@RequestParam String email){
+        return ResponseEntity.status(HttpStatus.OK).body(noteService.getAllNotesByUserEmail(email));
     }
 
     @DeleteMapping("/delete-note/{id}")
