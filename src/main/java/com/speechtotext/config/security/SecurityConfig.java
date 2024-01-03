@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/notes/**", "/auth/**").permitAll()
+                                .requestMatchers("/user/**").hasAuthority("ADMIN")
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -35,9 +36,7 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-
         return http.build();
-
     }
 
 }

@@ -71,7 +71,6 @@ public class NoteServiceImp implements NoteService {
     private void saveAudioOnGoogleCloudBucket(String base64){
         BlobId blobId = BlobId.of("wgebrehnbrethnj4retn", "record.mp3");
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
-        System.out.println(base64);
         base64 = base64.trim();
         byte[] decodedByte = null;
         try {
@@ -101,7 +100,6 @@ public class NoteServiceImp implements NoteService {
 
             for (SpeechRecognitionResult result : results) {
                 SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
-                System.out.printf("Transcription: %s%n", alternative.getTranscript());
                 return alternative.getTranscript();
             }
         } catch (IOException e) {
